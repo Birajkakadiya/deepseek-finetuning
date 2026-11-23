@@ -26,7 +26,8 @@ class ProfessorNotebookTests(unittest.TestCase):
         self.assertIn("RUN_NEW_TRAINING = False", source)
         self.assertIn("nvidia/OpenCodeInstruct", source)
         self.assertIn("deepseek-ai/deepseek-coder-6.7b-instruct", source)
-        self.assertIn('HF_TOKEN', source)\n        self.assertNotIn('RUN_NEW_TRAINING = True', source)
+        self.assertIn('HF_TOKEN', source)
+        self.assertNotIn('RUN_NEW_TRAINING = True', source)
 
 
 if __name__ == "__main__":
