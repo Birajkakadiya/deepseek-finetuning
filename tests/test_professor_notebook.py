@@ -14,7 +14,9 @@ class ProfessorNotebookTests(unittest.TestCase):
         self.assertEqual(len(cells), 10)
         self.assertTrue(all(c["cell_type"] == "code" for c in cells))
         self.assertEqual(len({c["id"] for c in cells}), len(cells))
-        self.assertTrue(all(not c.get("outputs") for c in cells))
+        # Saved outputs are intentional: the professor can review real archived results
+        # without executing training or accessing private model weights.
+        self.assertTrue(any(c.get("outputs") for c in cells))
         for i, c in enumerate(cells, start=1):
             with self.subTest(cell=i):
                 ast.parse("".join(c["source"]), filename=f"cell_{i}.py")
@@ -22,7 +24,8 @@ class ProfessorNotebookTests(unittest.TestCase):
     def test_optional_training_requires_opt_in(self):
         file = Path(__file__).resolve().parents[1] / "colab" / "Professor_Submission_DeepSeek_Coder_6_7B.ipynb"
         nb = json.loads(file.read_text(encoding="utf-8"))
-        source = "\n".join("".join(c["source"]) for c in nb["cells"])
+        source = "
+".join("".join(c["source"]) for c in nb["cells"])
         self.assertIn("RUN_NEW_TRAINING = False", source)
         self.assertIn("nvidia/OpenCodeInstruct", source)
         self.assertIn("deepseek-ai/deepseek-coder-6.7b-instruct", source)
