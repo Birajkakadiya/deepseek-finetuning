@@ -1,0 +1,20 @@
+{
+  "output_dir": "outputs/t4",
+  "load_in_4bit": true,
+  "max_length": 1024,
+  "max_steps": 60,
+  "max_train_samples": 1500,
+  "max_eval_samples": 100,
+  "min_test_score": null,
+  "shuffle_buffer": 10000,
+  "batch_size": 1,
+  "gradient_accumulation_steps": 8,
+  "learning_rate": 0.0002,
+  "lora_r": 16,
+  "lora_alpha": 32,
+  "lora_dropout": 0.05,
+  "logging_steps": 5,
+  "eval_steps": 30,
+  "save_steps": 30,
+  "seed": 42
+}
