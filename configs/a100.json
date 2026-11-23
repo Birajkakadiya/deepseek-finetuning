@@ -1,0 +1,20 @@
+{
+  "output_dir": "outputs/a100",
+  "load_in_4bit": false,
+  "max_length": 2048,
+  "max_steps": 100,
+  "max_train_samples": 4000,
+  "max_eval_samples": 200,
+  "min_test_score": null,
+  "shuffle_buffer": 20000,
+  "batch_size": 1,
+  "gradient_accumulation_steps": 8,
+  "learning_rate": 0.0002,
+  "lora_r": 16,
+  "lora_alpha": 32,
+  "lora_dropout": 0.05,
+  "logging_steps": 10,
+  "eval_steps": 50,
+  "save_steps": 50,
+  "seed": 42
+}
