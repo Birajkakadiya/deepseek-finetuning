@@ -12,7 +12,7 @@ class ProfessorNotebookTests(unittest.TestCase):
         nb = json.loads(NOTEBOOK.read_text(encoding="utf-8"))
         self.assertEqual(nb["nbformat"], 4)
         cells = nb["cells"]
-        self.assertEqual(len(cells), 10)
+        self.assertEqual(len(cells), 11)
         self.assertTrue(all(c["cell_type"] == "code" for c in cells))
         self.assertEqual(len({c["id"] for c in cells}), len(cells))
         self.assertTrue(any(c.get("outputs") for c in cells))
@@ -28,6 +28,8 @@ class ProfessorNotebookTests(unittest.TestCase):
         self.assertIn("deepseek-ai/deepseek-coder-6.7b-instruct", source)
         self.assertIn("HF_TOKEN", source)
         self.assertNotIn("RUN_NEW_TRAINING = True", source)
+        self.assertIn("COMPARE_GPU_RUNS = False", source)
+        self.assertIn("torch.cuda.is_bf16_supported()", source)
 
     def test_archived_metrics_are_explicit(self):
         nb = json.loads(NOTEBOOK.read_text(encoding="utf-8"))
