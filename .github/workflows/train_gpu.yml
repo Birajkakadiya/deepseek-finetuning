@@ -1,0 +1,56 @@
+name: Fine-tune DeepSeek-Coder on a GPU
+on:
+  workflow_dispatch:
+    inputs:
+      preset:
+        description: Hardware preset (AWS G4dn uses t4)
+        required: true
+        type: choice
+        options: [t4, a100]
+      runner_label:
+        description: Label for a GPU runner you already provisioned
+        required: true
+        type: string
+        default: gpu-t4
+      max_steps:
+        description: Training optimizer steps
+        required: true
+        type: string
+        default: '60'
+permissions:
+  contents: read
+jobs:
+  train:
+    runs-on: ${{ inputs.runner_label }}
+    timeout-minutes: 360
+    env:
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      TOKENIZERS_PARALLELISM: 'false'
+      PRESET: ${{ inputs.preset }}
+      MAX_STEPS: ${{ inputs.max_steps }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Confirm NVIDIA CUDA GPU
+        run: nvidia-smi
+      - name: Install PyTorch and training libraries
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install 'torch>=2.6,<3'
+          python -m pip install -r requirements.txt
+      - name: Run supervised fine-tuning
+        run: python train.py --preset "$PRESET" --max-steps "$MAX_STEPS" --output-dir "outputs/$PRESET"
+      - name: Generate loss graph
+        run: python plot_loss.py --output-dir "outputs/$PRESET"
+      - name: Upload adapter and evaluation metrics
+        uses: actions/upload-artifact@v4
+        with:
+          name: deepseekcoder-${{ inputs.preset }}-adapter
+          path: |
+            outputs/${{ inputs.preset }}/adapter/
+            outputs/${{ inputs.preset }}/trainer_state.json
+            outputs/${{ inputs.preset }}/run_metadata.json
+            outputs/${{ inputs.preset }}/loss.png
+          retention-days: 14
