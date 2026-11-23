@@ -8,7 +8,7 @@ A reproducible single-GPU supervised fine-tuning starter using **Transformers, D
 - **Method:** Rank 16, alpha 32, dropout 0.05, q/k/v/o and feed-forward projection adapters.
 - **Status:** Source and CPU preprocessing tests available; a full CUDA training run has **not** been completed or benchmarked.
 
-## 🚀 One-click Google Colab T4 notebook
+##  One-click Google Colab T4 notebook
 
 [**Open DeepSeek-Coder 6.7B QLoRA in Google Colab**](https://colab.research.google.com/github/Birajkakadiya/deepseek-finetuning/blob/main/colab/DeepSeek_Coder_6_7B_T4_QLoRA.ipynb)
 
@@ -19,7 +19,7 @@ A reproducible single-GPU supervised fine-tuning starter using **Transformers, D
 
 The notebook downloads the code from this repository; **GitHub does not itself provide a free T4 GPU**. No long run is started automatically, and nothing is pushed to the repository from Colab.
 
-## 🧩 Publish a saved LoRA adapter to Hugging Face
+##  Publish a saved LoRA adapter to Hugging Face
 
 [**Open the publishing notebook in Google Colab**](https://colab.research.google.com/github/Birajkakadiya/deepseek-finetuning/blob/main/colab/Publish_DeepSeek_Coder_LoRA_to_Hugging_Face.ipynb)
 
