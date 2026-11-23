@@ -8,6 +8,17 @@ A reproducible single-GPU supervised fine-tuning starter using **Transformers, D
 - **Method:** Rank 16, alpha 32, dropout 0.05, q/k/v/o and feed-forward projection adapters.
 - **Status:** Source and CPU preprocessing tests available; a full CUDA training run has **not** been completed or benchmarked.
 
+## 🚀 One-click Google Colab T4 notebook
+
+[**Open DeepSeek-Coder 6.7B QLoRA in Google Colab**](https://colab.research.google.com/github/Birajkakadiya/deepseek-finetuning/blob/main/colab/DeepSeek_Coder_6_7B_T4_QLoRA.ipynb)
+
+1. In Colab choose **Runtime → Change runtime type → T4 GPU → Save** (subject to Colab availability and quotas).
+2. Click **Runtime → Run all**. The default smoke test runs **2 optimizer steps**, **48 training samples**, **8 validation samples**, **512 tokens** with 4-bit NF4 QLoRA.
+3. Inspect validation metrics and loss plot, then authorize the optional Google Drive cell to archive the LoRA adapter.
+4. Only after the smoke test works, enable `RUN_LONG_TRAINING = True` in the optional 60-step cell and run that cell on its own.
+
+The notebook downloads the code from this repository; **GitHub does not itself provide a free T4 GPU**. No long run is started automatically, and nothing is pushed to the repository from Colab.
+
 ## Quick start
 
 On Ubuntu with a working CUDA-enabled NVIDIA GPU:
