@@ -165,7 +165,7 @@ base = AutoModelForCausalLM.from_pretrained(
 )
 model = PeftModel.from_pretrained(base, adapter_id).eval()
 tokenizer = AutoTokenizer.from_pretrained(adapter_id)
-prompt = [{"role": "user", "content": "Write a Python binary search function with tests."}]
+prompt = [{{"role": "user", "content": "Write a Python binary search function with tests."}}]
 input_ids = tokenizer.apply_chat_template(
     prompt, add_generation_prompt=True, return_tensors="pt"
 ).to("cuda")
