@@ -19,6 +19,36 @@ A reproducible single-GPU supervised fine-tuning starter using **Transformers, D
 
 The notebook downloads the code from this repository; **GitHub does not itself provide a free T4 GPU**. No long run is started automatically, and nothing is pushed to the repository from Colab.
 
+## 🧩 Publish a saved LoRA adapter to Hugging Face
+
+[**Open the publishing notebook in Google Colab**](https://colab.research.google.com/github/Birajkakadiya/deepseek-finetuning/blob/main/colab/Publish_DeepSeek_Coder_LoRA_to_Hugging_Face.ipynb)
+
+This is a **CPU-only** workflow. The publishing notebook mounts Google Drive, reads
+`MyDrive/deepseek-coder-t4-smoke-adapter.zip`, runs the CPU-only validation, and
+generates a model card with the base model, dataset attribution, training details,
+and metrics. It uploads **only** the LoRA adapter and selected tokenizer/metadata files.
+
+Create a write-capable token at [Hugging Face Access Tokens](https://huggingface.co/settings/tokens),
+then store it in **Colab Secrets** under the name `HF_TOKEN`. Never add the
+token to your GitHub repo or paste it into notebook cells.
+
+1. In the notebook run Steps 1–3; the publisher runs in **dry-run mode**.
+2. Review `REPO_NAME` and `VISIBILITY` (`public` or `private`).
+3. In Step 4 set `PUBLISH_TO_HUB = True` and execute the cell to create a **new**
+   model repo and upload the adapter. Existing model repos are never overwritten.
+4. Visit the model URL printed on successful upload.
+
+CLI equivalent on a machine that has the ZIP and your **HF_TOKEN** environment variable:
+
+```bash
+python publish_to_hub.py --zip /path/to/deepseek-coder-t4-smoke-adapter.zip
+# After preview and checking visibility:
+python publish_to_hub.py --zip /path/to/deepseek-coder-t4-smoke-adapter.zip --visibility public --publish
+```
+
+This publishes only the small **2-step smoke test**, not a benchmarked improvement.
+A successful GPU training run and completed Hub upload are separate events.
+
 ## Quick start
 
 On Ubuntu with a working CUDA-enabled NVIDIA GPU:
